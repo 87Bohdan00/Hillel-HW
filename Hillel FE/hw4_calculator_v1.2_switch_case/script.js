@@ -1,56 +1,53 @@
-let action = "";
-let answer = "";
-let sign = "";
+const sum = "+";
+const diff = "-";
+const mult = "*";
+const div = "/";
+const pow = "pow";
+const sin = "sin";
+const cos = "cos";
+let a;
+let b;
+let result;
 
-const operation = prompt("Choose operation:\nsum\ndiff\nmult\ndiv\npow\nsin\ncos");
+const operation = prompt("Choose operation:\n +\n -\n *\n /\n pow\n sin\n cos");
 
-if (operation == "sin" || operation == "cos") {
-    const a = Number(prompt("Enter number in radians:"));
-    switch (operation) {
-        case "sin":
-            answer = Math.sin(a);
-            action = "Sin";
-            break;
-        case "cos":
-            answer = Math.cos(a);
-            action = "Cos";
-            break;
-    }
-    console.log(`${action} of number ${a} = ${answer}`);
-} else if (operation == "sum" || operation == "diff" || operation == "mult" || operation == "div" || operation == "pow") {
-    const a = Number(prompt("Enter the first number:"));
-    const b = Number(prompt("Enter the second number:"));
-    switch (operation) {
-        case "sum":
-            answer = a + b;
-            action = "Sum";
-            sign = "+";
-            break;
-        case "diff":
-            answer = a - b;
-            action = "Diff";
-            sign = "-";
-            break;
-        case "mult":
-            answer = a * b;
-            action = "Mult";
-            sign = "*";
-            break;
-        case "div":
-            answer = a / b;
-            action = "Div";
-            sign = "/";
-            break;
-        case "pow":
-            answer = Math.pow(a, b);
-            action = "Exponentiation";
-            sign = "^";
-            break;
-    }
-    console.log(`${action}: ${a} ${sign} ${b} = ${answer}`);
-} else {
-    console.log("ERROR");
+switch (operation) {
+    case sin:
+        a = prompt("Enter number in radians:");
+        result = Math.sin(a);
+        break;
+    case cos:
+        a = prompt("Enter number in radians:");
+        result = Math.cos(a);
+        break;
 }
 
-// Убрал default со switch/case, потому что, если пользователь введет что-либо кроме числа,
-// в консоль выведеться не default, а NaN, потому что прописана функция Number()
+switch (operation) {
+    case sum:
+        a = +prompt("Enter the first number:");
+        b = +prompt("Enter the second number:");
+        result = a + b;
+        break;
+    case diff:
+        a = +prompt("Enter the first number:");
+        b = +prompt("Enter the second number:");
+        result = a - b;
+        break;
+    case mult:
+        a = +prompt("Enter the first number:");
+        b = +prompt("Enter the second number:");
+        result = a * b;
+        break;
+    case div:
+        a = +prompt("Enter the first number:");
+        b = +prompt("Enter the second number:");
+        result = a / b;
+        break;
+    case pow:
+        a = +prompt("Enter the first number:");
+        b = +prompt("Enter the second number:");
+        result = Math.pow(a, b);
+        break;
+}
+
+console.log(`Operation ${operation} finished with result ${result}`);
