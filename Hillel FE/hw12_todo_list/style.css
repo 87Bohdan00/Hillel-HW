@@ -1,0 +1,39 @@
+p{
+    font-size: 16px;
+}
+
+div{
+    margin: 10px 0;
+}
+
+input{
+    margin: 10px 0;
+}
+
+button{
+    margin: 10px 0;
+}
+
+div > input{
+    display: flex;
+    flex-direction: row;
+}
+
+.low{
+    background-color: greenyellow;
+    display: table;
+}
+
+.mid{
+    background-color: orange;
+    display: table;
+}
+
+.high{
+    background-color: red;
+    display: table;
+}
+
+.checked{
+    text-decoration: line-through;
+}
