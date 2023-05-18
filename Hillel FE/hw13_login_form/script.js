@@ -5,13 +5,10 @@ const button = document.getElementById('button');
 const errorMessage = document.getElementById('error-message');
 const successMessage = document.getElementById('success-message');
 
+button.disabled = true;
+
 function emailPassValidation(email, password) {
    successMessage.textContent = '';
-
-   if (!email || !password) {
-      errorMessage.textContent = 'Email or password is empty';
-      return;
-   }
 
    if (email === 'admin' && password === 'password123') {
       successMessage.textContent = 'Success!';
@@ -19,39 +16,64 @@ function emailPassValidation(email, password) {
       return;
    }
 
-   if (password.length <= 6) {
-      errorMessage.textContent = 'Password must be more than 6 characters';
-      return;
+   errorMessage.textContent = 'This user does not exist';
+}
+
+function emailValidation(email) {
+   if (!email) {
+      errorMessage.textContent = 'Email is empty';
+      return false;
    }
 
    const emailValidation = email.split('@');
-   const emailPart = emailValidation[1].split('.');
+   const emailPart = emailValidation[1]?.split('.');
+
    if (
       emailValidation.length !== 2 ||
       !emailValidation[0] ||
-      !emailValidation[1].includes('.') ||
-      emailPart[0].length < 2 ||
-      emailPart[1].length < 2
+      !emailValidation[1]?.includes('.') ||
+      emailPart[0]?.length < 2 ||
+      emailPart[1]?.length < 2
    ) {
       errorMessage.textContent = 'Email entered incorrectly';
-      return;
+      return false;
    }
 
-   if (email || password) {
-      errorMessage.textContent = 'This user does not exist';
+   errorMessage.textContent = '';
+   return true;
+}
+
+function passwordValidation(password) {
+   if (!password) {
+      errorMessage.textContent = 'Password is empty';
+      return false;
    }
+
+   if (password.length < 6) {
+      errorMessage.textContent = 'Password must be at least 6 characters long';
+      return false;
+   }
+
+   errorMessage.textContent = '';
+   return true;
 }
 
 function checkInputs() {
-   if (emailInput.value && passwordInput.value) {
+   if (emailValidation(emailInput.value) && passwordValidation(passwordInput.value)) {
       button.disabled = false;
    } else {
       button.disabled = true;
    }
 }
 
-emailInput.addEventListener('input', checkInputs);
-passwordInput.addEventListener('input', checkInputs);
+emailInput.addEventListener('blur', () => {
+   emailValidation(emailInput.value);
+});
+
+passwordInput.addEventListener('input', () => {
+   passwordValidation(passwordInput.value);
+   checkInputs();
+});
 
 form.addEventListener('submit', (e) => {
    e.preventDefault();
