@@ -1,61 +1,69 @@
 class Slider {
     constructor() {
         this.carousel = document.querySelector('#carouselExampleIndicators');
-        this.carouselItems = this.carousel.querySelectorAll('.carousel-item');
-        this.activeIndex = 0;
+        this.carouselItems = Array.from(
+            this.carousel.querySelectorAll('.carousel-item')
+        );
+        this.activenumber = 0;
+        this.carouselIndicators = Array.from(
+            this.carousel.querySelectorAll('.carousel-indicators button')
+        );
     }
 
     nextSlide() {
-        this.carouselItems[this.activeIndex].classList.remove('active');
-        this.activeIndex = (this.activeIndex + 1) % this.carouselItems.length;
-        this.carouselItems[this.activeIndex].classList.add('active');
+        this.carouselItems[this.activenumber].classList.remove('active');
+        this.activenumber = (this.activenumber + 1) % this.carouselItems.length;
+        this.carouselItems[this.activenumber].classList.add('active');
     }
 
     prevSlide() {
-        this.carouselItems[this.activeIndex].classList.remove('active');
-        if (this.activeIndex === 0) {
-            this.activeIndex = 3;
+        this.carouselItems[this.activenumber].classList.remove('active');
+        if (this.activenumber === 0) {
+            this.activenumber = 3;
         }
-        this.activeIndex = (this.activeIndex - 1) % this.carouselItems.length;
-        this.carouselItems[this.activeIndex].classList.add('active');
+        this.activenumber = (this.activenumber - 1) % this.carouselItems.length;
+        this.carouselItems[this.activenumber].classList.add('active');
     }
 
     lastSlide() {
-        this.carouselItems[this.activeIndex].classList.remove('active');
-        this.activeIndex = this.carouselItems.length - 1;
-        this.carouselItems[this.activeIndex].classList.add('active');
+        this.carouselItems[this.activenumber].classList.remove('active');
+        this.activenumber = this.carouselItems.length - 1;
+        this.carouselItems[this.activenumber].classList.add('active');
     }
 
     firstSlide() {
-        this.carouselItems[this.activeIndex].classList.remove('active');
-        this.activeIndex = 0;
-        this.carouselItems[this.activeIndex].classList.add('active');
+        this.carouselItems[this.activenumber].classList.remove('active');
+        this.activenumber = 0;
+        this.carouselItems[this.activenumber].classList.add('active');
     }
 
-    openSlideByIndex(number) {
-        this.carouselItems[this.activeIndex].classList.remove('active');
-        this.activeIndex = number - 1;
-        this.carouselItems[this.activeIndex].classList.add('active');
+    openSlideBynumber(number) {
+        this.carouselItems[this.activenumber].classList.remove('active');
+        this.activenumber = number - 1;
+        this.carouselItems[this.activenumber].classList.add('active');
     }
 
     removeLastSlide() {
         this.carouselItems[this.carouselItems.length - 1].remove();
-        if (this.activeIndex === this.carouselItems.length) {
-            this.activeIndex = 0;
+        if (this.activenumber === this.carouselItems.length) {
+            this.activenumber = 0;
         }
     }
 
     removeSlide(number) {
-        this.activeIndex = number - 1;
-        this.carouselItems[this.activeIndex].remove();
+        this.activenumber = number - 1;
+        this.carouselItems[this.activenumber].remove();
         if (this.carouselItems[0]) {
-            this.carouselItems[this.activeIndex].classList.remove('active');
+            this.carouselItems[this.activenumber].classList.remove('active');
             this.carouselItems[1].classList.add('active');
         }
     }
 
     addSlide(title, description) {
-        const carouselInner = document.querySelector('.carousel-inner');
+        const carouselInner = this.carousel.querySelector('.carousel-inner');
+        const carouselIndicators = this.carousel.querySelector(
+            '.carousel-indicators'
+        );
 
         const newSlide = document.createElement('div');
         newSlide.classList.add('carousel-item');
@@ -64,64 +72,122 @@ class Slider {
         }
 
         const slideContent = document.createElement('div');
+        slideContent.classList.add('d-block', 'w-100');
         newSlide.appendChild(slideContent);
 
-        const slideTitle = document.createElement('h3');
+        const slideImage = document.createElement('img');
+        slideImage.src = './img/4.jpg';
+        slideImage.classList.add('d-block', 'w-100');
+        slideContent.appendChild(slideImage);
+
+        const slideCaption = document.createElement('div');
+        slideCaption.classList.add('carousel-caption', 'd-none', 'd-md-block');
+        slideContent.appendChild(slideCaption);
+
+        const slideTitle = document.createElement('h5');
         slideTitle.textContent = title;
-        slideContent.appendChild(slideTitle);
+        slideCaption.appendChild(slideTitle);
 
         const slideDesc = document.createElement('p');
         slideDesc.textContent = description;
-        slideContent.appendChild(slideDesc);
+        slideCaption.appendChild(slideDesc);
 
         carouselInner.appendChild(newSlide);
+
+        const newIndicator = document.createElement('button');
+        newIndicator.setAttribute('type', 'button');
+        newIndicator.setAttribute(
+            'data-bs-target',
+            '#carouselExampleIndicators'
+        );
+        newIndicator.setAttribute(
+            'data-bs-slide-to',
+            this.carouselItems.length.toString()
+        );
+        if (this.carouselItems.length === 0) {
+            newIndicator.classList.add('active');
+        }
+        this.carousel
+            .querySelector('.carousel-indicators')
+            .appendChild(newIndicator);
+
+        carouselIndicators.appendChild(newIndicator);
+
+        this.carouselItems = Array.from(
+            this.carousel.querySelectorAll('.carousel-item')
+        );
     }
 
     insertSlide(number, title, description) {
-        const carouselInner = document.querySelector('.carousel-inner');
+        if (number >= 0 && number <= this.carouselItems.length) {
+            const carouselInner =
+                this.carousel.querySelector('.carousel-inner');
+            const carouselIndicators = this.carousel.querySelector(
+                '.carousel-indicators'
+            );
 
-        const newSlide = document.createElement('div');
-        newSlide.classList.add('carousel-item');
-        if (this.carouselItems.length === 0) {
-            newSlide.classList.add('active');
-        }
+            const newSlide = document.createElement('div');
+            newSlide.classList.add('carousel-item');
+            if (this.carouselItems.length === 0) {
+                newSlide.classList.add('active');
+            }
 
-        const slideContent = document.createElement('div');
-        newSlide.appendChild(slideContent);
+            const slideContent = document.createElement('div');
+            slideContent.classList.add('d-block', 'w-100');
+            newSlide.appendChild(slideContent);
 
-        const slideTitle = document.createElement('h3');
-        slideTitle.textContent = title;
-        slideContent.appendChild(slideTitle);
+            const slideImage = document.createElement('img');
+            slideImage.src = './img/4.jpg';
+            slideImage.classList.add('d-block', 'w-100');
+            slideContent.appendChild(slideImage);
 
-        const slideDesc = document.createElement('p');
-        slideDesc.textContent = description;
-        slideContent.appendChild(slideDesc);
+            const slideCaption = document.createElement('div');
+            slideCaption.classList.add(
+                'carousel-caption',
+                'd-none',
+                'd-md-block'
+            );
+            slideContent.appendChild(slideCaption);
 
-        if (number >= 0 && number < this.carouselItems.length) {
-            const nextSlide = this.carouselItems[number - 1];
-            carouselInner.insertBefore(newSlide, nextSlide);
-        } else {
-            carouselInner.appendChild(newSlide);
+            const slideTitle = document.createElement('h5');
+            slideTitle.textContent = title;
+            slideCaption.appendChild(slideTitle);
+
+            const slideDesc = document.createElement('p');
+            slideDesc.textContent = description;
+            slideCaption.appendChild(slideDesc);
+
+            carouselInner.insertBefore(
+                newSlide,
+                this.carouselItems[number - 1]
+            );
+
+            const newIndicator = document.createElement('button');
+            newIndicator.setAttribute('type', 'button');
+            newIndicator.setAttribute(
+                'data-bs-target',
+                '#carouselExampleIndicators'
+            );
+
+            const indicatorIndex = this.carouselItems.length;
+            newIndicator.setAttribute(
+                'data-bs-slide-to',
+                indicatorIndex.toString()
+            );
+            if (this.carouselItems.length === 0) {
+                newIndicator.classList.add('active');
+            }
+
+            carouselIndicators.appendChild(newIndicator);
+
+            this.carouselItems = Array.from(
+                this.carousel.querySelectorAll('.carousel-item')
+            );
         }
     }
 }
 
 const slider = new Slider();
-
-// const addSlide = document.getElementById('addSlideForm');
-// addSlide.addEventListener('submit', function (e) {
-//     e.preventDefault();
-
-//     const slideTitleInput = document.getElementById('slideTitle');
-//     const slideDescInput = document.getElementById('slideDescription');
-//     const title = slideTitleInput.value;
-//     const description = slideDescInput.value;
-
-//     slider.addSlide(title, description);
-
-//     slideTitleInput.value = '';
-//     slideDescInput.value = '';
-// });
 
 const insertSlide = document.getElementById('addSlideForm');
 insertSlide.addEventListener('submit', function (e) {
@@ -134,21 +200,13 @@ insertSlide.addEventListener('submit', function (e) {
     const title = slideTitleInput.value;
     const description = slideDescInput.value;
 
-    slider.insertSlide(number, title, description);
+    if (number >= 1 && number <= slider.carouselItems.length + 1) {
+        slider.insertSlide(number, title, description);
+    } else {
+        slider.addSlide(title, description);
+    }
 
     slideNumberInput.value = '';
     slideTitleInput.value = '';
     slideDescInput.value = '';
 });
-
-// Есть проблема, если обработчик события addSlide не закоментирован
-// то insertSlide не работает (введенные данные в title и description не передаются, 
-// выводится пустой слайд). Весь интернет облазил, не могу понять в чем проблема.
-
-//slider.nextSlide();
-//slider.prevSlide();
-//slider.lastSlide();
-//slider.firstSlide();
-//slider.openSlideByIndex(2);
-//slider.removeLastSlide();
-//slider.removeSlide(1);
