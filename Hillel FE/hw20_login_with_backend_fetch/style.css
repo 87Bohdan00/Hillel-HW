@@ -1,0 +1,24 @@
+button{
+   margin: 5px;
+}
+.form-container {
+   width: 300px;
+   margin: 0 auto;
+ }
+
+ .form-container input {
+   width: 100%;
+   margin-bottom: 10px;
+ }
+
+ .form-container button {
+   width: 100%;
+ }
+
+ .user-list {
+   margin-top: 20px;
+ }
+
+ .user-list-item {
+   margin-bottom: 5px;
+ }
