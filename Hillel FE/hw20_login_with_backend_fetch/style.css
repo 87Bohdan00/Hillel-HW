@@ -1,24 +1,75 @@
-button{
-   margin: 5px;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
-.form-container {
-   width: 300px;
-   margin: 0 auto;
- }
 
- .form-container input {
-   width: 100%;
-   margin-bottom: 10px;
- }
+.form-container,
+.user-list,
+.container-new-users {
+  padding: 20px;
+  border: 1px solid #ccc;
+  margin: 10px;
+}
 
- .form-container button {
-   width: 100%;
- }
+.user-list {
+  display: none;
+}
 
- .user-list {
-   margin-top: 20px;
- }
+.user-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
 
- .user-list-item {
-   margin-bottom: 5px;
- }
+.user-list .user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-list .user-details {
+  flex: 1;
+}
+
+.user-list .user-name {
+  font-weight: bold;
+}
+
+.user-list .user-email {
+  font-style: italic;
+  color: gray;
+}
+
+.container-new-users form {
+  margin-bottom: 10px;
+}
+
+.container-new-users {
+  display: none;
+}
+
+#new-user-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#new-user-list .user-details {
+  flex: 1;
+}
+
+#new-user-list .user-name {
+  font-weight: bold;
+}
+
+#new-user-list .user-email {
+  font-style: italic;
+  color: gray;
+}
+
+#new-user-list .user-job {
+  font-weight: bold;
+}
