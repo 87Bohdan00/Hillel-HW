@@ -1,15 +1,23 @@
 import { getUsers } from './modules/api.js';
 import { addNewUser } from './modules/new_users.js';
 
-//TODO: допилить функционал в new_users.js
-
 const loginForm = document.getElementById('login-form');
 const emailInput = document.getElementById('email-input');
 const passwordInput = document.getElementById('password-input');
 const userForm = document.getElementById('user-form');
 const newUserContainer = document.querySelector('.container-new-users');
+const logoutButton = document.getElementById('logout-button');
 
 let userNum = 7;
+
+window.addEventListener('DOMContentLoaded', () => {
+   const token = localStorage.getItem('token');
+
+   if (token) {
+      loginSuccess();
+      getUsers();
+   }
+});
 
 loginForm.addEventListener('submit', async (e) => {
    e.preventDefault();
@@ -43,6 +51,22 @@ loginForm.addEventListener('submit', async (e) => {
    emailInput.value = '';
    passwordInput.value = '';
 });
+
+logoutButton.addEventListener('click', () => {
+   localStorage.removeItem('token');
+   logoutButton.style.display = 'none';
+   showLoginForm();
+});
+
+function showLoginForm() {
+   const formContainer = document.querySelector('.form-container');
+   const userListContainer = document.querySelector('.user-list');
+   const newUserContainer = document.querySelector('.container-new-users');
+
+   formContainer.style.display = 'block';
+   userListContainer.style.display = 'none';
+   newUserContainer.style.display = 'none';
+}
 
 userForm.addEventListener('submit', async (e) => {
    e.preventDefault();
@@ -94,6 +118,7 @@ function loginSuccess() {
    formContainer.style.display = 'none';
    userListContainer.style.display = 'block';
    newUserContainer.style.display = 'block';
+   logoutButton.style.display = 'block';
 }
 
 export { userNum };

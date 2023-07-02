@@ -17,7 +17,6 @@ function addNewUser(user) {
         `;
    li.appendChild(div);
 
-   //TODO: допилить функционал
    const editButton = document.createElement('button');
    editButton.textContent = 'Edit';
    editButton.addEventListener('click', () => {

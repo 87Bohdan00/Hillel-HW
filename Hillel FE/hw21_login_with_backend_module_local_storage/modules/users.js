@@ -1,4 +1,5 @@
 const userList = document.getElementById('user-list');
+const newUserList = document.getElementById('new-user-list');
 
 function displayUsers(users) {
    userList.innerHTML = '';
@@ -54,6 +55,10 @@ async function editUser(user) {
    emailInput.type = 'email';
    emailInput.value = user.email;
 
+   const jobInput = document.createElement('input');
+   jobInput.type = 'text';
+   jobInput.value = user.job;
+
    const saveButton = document.createElement('button');
    saveButton.textContent = 'Save';
 
@@ -64,6 +69,7 @@ async function editUser(user) {
          first_name: firstNameInput.value,
          last_name: lastNameInput.value,
          email: emailInput.value,
+         job: jobInput.value,
       };
 
       try {
@@ -88,6 +94,7 @@ async function editUser(user) {
                userItem.innerHTML = `
                                         <span class="user-name">${updatedUser.first_name} ${updatedUser.last_name}</span>
                                         <span class="user-email">${updatedUser.email}</span>
+                                        <span class="user-email">${updatedUser.job}</span>
                                     `;
             }
          } else {
@@ -110,10 +117,15 @@ async function editUser(user) {
    form.appendChild(firstNameInput);
    form.appendChild(lastNameInput);
    form.appendChild(emailInput);
+   form.appendChild(jobInput);
    form.appendChild(saveButton);
    form.appendChild(cancelButton);
 
-   userList.querySelector(`.user-${user.id} .user-details`).appendChild(form);
+   if (user.id >= 7) {
+      newUserList.querySelector(`.user-${user.id} .user-details`).appendChild(form);
+   } else {
+      userList.querySelector(`.user-${user.id} .user-details`).appendChild(form);
+   }
 }
 
 async function deleteUser(userId) {

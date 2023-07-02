@@ -1,3 +1,11 @@
+input{
+  margin: 5px;
+}
+
+#logout-button{
+  display: none;
+}
+
 .container {
   display: flex;
   justify-content: center;
