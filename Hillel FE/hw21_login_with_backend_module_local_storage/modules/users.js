@@ -1,7 +1,7 @@
 const userList = document.getElementById('user-list');
 const newUserList = document.getElementById('new-user-list');
 
-function displayUsers(users) {
+function displayUsers(users, currentPage) {
    userList.innerHTML = '';
 
    users.forEach((user) => {
@@ -38,6 +38,17 @@ function displayUsers(users) {
       li.appendChild(deleteButton);
       userList.appendChild(li);
    });
+
+   const paginationInfo = document.createElement('div');
+   paginationInfo.classList.add('pagination');
+
+   if (currentPage) {
+      paginationInfo.textContent = `Page ${currentPage} of 2`;
+   } else {
+      paginationInfo.textContent = `Page 1 of 1`;
+   }
+
+   userList.appendChild(paginationInfo);
 }
 
 async function editUser(user) {
@@ -58,6 +69,11 @@ async function editUser(user) {
    const jobInput = document.createElement('input');
    jobInput.type = 'text';
    jobInput.value = user.job;
+
+   if (user.job === undefined) {
+      jobInput.classList.add('job-input-none');
+      delete user.job;
+   }
 
    const saveButton = document.createElement('button');
    saveButton.textContent = 'Save';
@@ -90,11 +106,16 @@ async function editUser(user) {
                `.user-${user.id} .user-details`
             );
 
-            if (userItem) {
+            if (user.job === undefined) {
                userItem.innerHTML = `
                                         <span class="user-name">${updatedUser.first_name} ${updatedUser.last_name}</span>
                                         <span class="user-email">${updatedUser.email}</span>
-                                        <span class="user-email">${updatedUser.job}</span>
+                                    `;
+            } else {
+               userItem.innerHTML = `
+                                        <span class="user-name">${updatedUser.first_name} ${updatedUser.last_name}</span>
+                                        <span class="user-email">${updatedUser.email}</span>
+                                        <span class="user-job">${updatedUser.job}</span>
                                     `;
             }
          } else {
@@ -122,9 +143,13 @@ async function editUser(user) {
    form.appendChild(cancelButton);
 
    if (user.id >= 7) {
-      newUserList.querySelector(`.user-${user.id} .user-details`).appendChild(form);
+      newUserList
+         .querySelector(`.user-${user.id} .user-details`)
+         .appendChild(form);
    } else {
-      userList.querySelector(`.user-${user.id} .user-details`).appendChild(form);
+      userList
+         .querySelector(`.user-${user.id} .user-details`)
+         .appendChild(form);
    }
 }
 

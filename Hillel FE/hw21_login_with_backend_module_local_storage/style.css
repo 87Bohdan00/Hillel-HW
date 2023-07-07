@@ -81,3 +81,12 @@ input{
 #new-user-list .user-job {
   font-weight: bold;
 }
+
+.job-input-none{
+  display: none;
+}
+
+.pagination{
+  display: flex;
+  justify-content: center;
+}

@@ -1,4 +1,4 @@
-import { getUsers } from './modules/api.js';
+import { getUsers } from './modules/fetch-users.js';
 import { addNewUser } from './modules/new_users.js';
 
 const loginForm = document.getElementById('login-form');
@@ -7,8 +7,11 @@ const passwordInput = document.getElementById('password-input');
 const userForm = document.getElementById('user-form');
 const newUserContainer = document.querySelector('.container-new-users');
 const logoutButton = document.getElementById('logout-button');
+const prevPageButton = document.getElementById('prev-page');
+const nextPageButton = document.getElementById('next-page');
 
 let userNum = 7;
+let currentPage = 1;
 
 window.addEventListener('DOMContentLoaded', () => {
    const token = localStorage.getItem('token');
@@ -37,7 +40,7 @@ loginForm.addEventListener('submit', async (e) => {
          if (data.token) {
             localStorage.setItem('token', data.token);
             loginSuccess();
-            await getUsers();
+            await getUsers(1);
          } else {
             console.warn('Login failed');
          }
@@ -120,5 +123,23 @@ function loginSuccess() {
    newUserContainer.style.display = 'block';
    logoutButton.style.display = 'block';
 }
+
+prevPageButton.addEventListener('click', () => {
+   if (currentPage > 1) {
+      currentPage--;
+      getUsers(currentPage);
+   } else {
+      currentPage = 1;
+   }
+});
+
+nextPageButton.addEventListener('click', () => {
+   if (currentPage >= 2) {
+      currentPage = 2;
+   } else {
+      currentPage++;
+      getUsers(currentPage);
+   }
+});
 
 export { userNum };
