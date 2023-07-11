@@ -1,0 +1,68 @@
+.button {
+   display: inline-block;
+   padding: 10px 20px;
+   background-color: #ccc;
+   color: #fff;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+ 
+   &:hover {
+     background-color: #aaa;
+   }
+ }
+ 
+ .form-group {
+   margin-bottom: 10px;
+ 
+   label {
+     display: block;
+     font-weight: bold;
+   }
+ 
+   input[type="text"],
+   input[type="email"],
+   input[type="password"] {
+     width: 100%;
+     padding: 8px;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+   }
+ }
+ 
+ .card {
+   padding: 20px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   background-color: #fff;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ 
+   h2 {
+     font-size: 18px;
+     margin-bottom: 10px;
+   }
+ 
+   p {
+     margin-bottom: 10px;
+   }
+ }
+ 
+ .alert {
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+ 
+   &.success {
+     background-color: #c9f9c9;
+     border-color: #7cd670;
+     color: #009900;
+   }
+ 
+   &.error {
+     background-color: #f9c9c9;
+     border-color: #d67070;
+     color: #990000;
+   }
+ }
+ 
