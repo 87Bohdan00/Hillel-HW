@@ -1,0 +1,37 @@
+.input {
+  margin-right: 20px;
+  width: 100%;
+  max-width: 220px;
+  height: 14px;
+  font-size: 14px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1.5px solid lightgrey;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0px 0px 20px -18px;
+}
+
+.input:hover {
+  border: 2px solid lightgrey;
+  box-shadow: 0px 0px 20px -17px;
+}
+
+.input:active {
+  transform: scale(0.95);
+}
+
+.input:focus {
+  border: 2px solid grey;
+}
+
+button {
+  border: 1px solid rgb(209,213,219);
+  border-radius: .5rem;
+  font-weight: 600;
+  line-height: 16px;
+  padding: .75rem 1rem;
+  text-align: center;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
